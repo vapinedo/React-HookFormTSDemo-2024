@@ -1,4 +1,9 @@
+import { useForm } from "react-hook-form"
+
 export default function YoutubeForm() {
+
+    const form = useForm();
+    
     return (
         <form>
             <h2 className="mb-4">Youtube Form</h2>

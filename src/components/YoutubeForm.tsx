@@ -1,12 +1,16 @@
 import { useForm } from "react-hook-form"
 
+let renderCount = 0;
+
 export default function YoutubeForm() {
 
     const { register } = useForm();
 
+    renderCount++;
+
     return (
         <form>
-            <h2 className="mb-4">Youtube Form</h2>
+            <h2 className="mb-4">Youtube Form ({renderCount / 2})</h2>
 
             <div className="mb-3">
                 <label className="form-label">Username</label>

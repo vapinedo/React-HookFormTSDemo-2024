@@ -42,7 +42,17 @@ export default function YoutubeForm() {
             dob: new Date(),
         }
     });
-    const { register, handleSubmit, formState, control, watch, getValues } = form;
+
+    const { 
+        watch, 
+        control,
+        register, 
+        setValue,
+        getValues, 
+        formState, 
+        handleSubmit, 
+    } = form;
+
     const { errors } = formState;
 
     const { fields, append, remove } = useFieldArray({
@@ -56,6 +66,14 @@ export default function YoutubeForm() {
 
     function handleGetValues() {
         console.log("Get values ", getValues("social"));
+    }
+
+    function handleSetValue() {
+        console.log("Set value ", setValue("username", "", {
+            shouldTouch: true,
+            shouldDirty: true,
+            shouldValidate: true,
+        }));
     }
 
     // const watchForm = watch();
@@ -175,6 +193,7 @@ export default function YoutubeForm() {
 
             <button type="submit" className="btn btn-primary">Submit</button>
             <button type="button" onClick={handleGetValues} className="btn btn-success">Get values</button>
+            <button type="button" onClick={handleSetValue} className="btn btn-warning">Set value</button>
         </form>
     )
 }

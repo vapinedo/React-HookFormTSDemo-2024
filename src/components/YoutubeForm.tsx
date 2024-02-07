@@ -42,7 +42,7 @@ export default function YoutubeForm() {
             dob: new Date(),
         }
     });
-    const { register, handleSubmit, formState, control } = form;
+    const { register, handleSubmit, formState, control, watch, getValues } = form;
     const { errors } = formState;
 
     const { fields, append, remove } = useFieldArray({
@@ -54,9 +54,18 @@ export default function YoutubeForm() {
         console.log("Form submitted", data);
     }
 
+    function handleGetValues() {
+        console.log("Get values ", getValues("social"));
+    }
+
+    // const watchForm = watch();
+    // const watchUsername = watch("username");
+    // const watchUsername = watch(["username", "email"]);
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <h2 className="mb-4">Youtube Form</h2>
+            {/* <article>{JSON.stringify(watchForm)}</article> */}
 
             <div className="mb-3">
                 <label className="form-label">Username</label>
@@ -164,7 +173,8 @@ export default function YoutubeForm() {
                 <small className="text-danger">{errors.dob?.message}</small>
             </div>
 
-            <button className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="button" onClick={handleGetValues} className="btn btn-success">Get values</button>
         </form>
     )
 }

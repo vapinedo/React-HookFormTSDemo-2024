@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form"
 
 type FormValues = {
-    username: string,
-    email: string,
-    channel: string,
+    username: string;
+    email: string;
+    channel: string;
     social: {
-        twitter: string,
+        twitter: string;
         facebook: string
-    }
+    };
+    phoneNumbers: string[];
 };
 
 export default function YoutubeForm() {
@@ -29,7 +30,8 @@ export default function YoutubeForm() {
             social: {
                 twitter: "",
                 facebook: ""
-            }
+            },
+            phoneNumbers: ["", ""]
         }
     });
     const { register, handleSubmit, formState } = form;
@@ -99,6 +101,16 @@ export default function YoutubeForm() {
             <div className="mb-3">
                 <label className="form-label">Facebook</label>
                 <input type="text" className="form-control" {...register("social.facebook")} />
+            </div>
+
+            <div className="mb-3">
+                <label className="form-label">Primary phone number</label>
+                <input type="text" className="form-control" {...register("phoneNumbers.0")} />
+            </div>
+
+            <div className="mb-3">
+                <label className="form-label">Secondary phone number</label>
+                <input type="text" className="form-control" {...register("phoneNumbers.1")} />
             </div>
 
             <button className="btn btn-primary">Submit</button>

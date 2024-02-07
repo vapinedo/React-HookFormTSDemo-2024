@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form"
+import { useForm, useFieldArray } from "react-hook-form"
 
 type FormValues = {
     username: string;
@@ -9,6 +9,9 @@ type FormValues = {
         facebook: string
     };
     phoneNumbers: string[];
+    phNumbers: {
+        number: string;
+    }[];
 };
 
 export default function YoutubeForm() {
@@ -31,11 +34,17 @@ export default function YoutubeForm() {
                 twitter: "",
                 facebook: ""
             },
-            phoneNumbers: ["", ""]
+            phoneNumbers: ["", ""],
+            phNumbers: [{ number: "" }],
         }
     });
-    const { register, handleSubmit, formState } = form;
+    const { register, handleSubmit, formState, control } = form;
     const { errors } = formState;
+
+    const { fields, append, remove } = useFieldArray({
+        name: "phNumbers",
+        control
+    });
 
     function onSubmit(data: FormValues) {
         console.log("Form submitted", data);
@@ -111,6 +120,20 @@ export default function YoutubeForm() {
             <div className="mb-3">
                 <label className="form-label">Secondary phone number</label>
                 <input type="text" className="form-control" {...register("phoneNumbers.1")} />
+            </div>
+
+            <div className="mb-3">
+                <label className="form-label">List of phone numbers</label>
+                <button onClick={() => append({ number: "" })} className="btn btn-sm btn-success">Add</button>
+
+                {fields.map((field, index) => (
+                    <div key={field.id} className="mb-2">
+                        <input type="text" className="form-control" {...register(`phNumbers.${index}.number` as const)} />
+                        {index > 0 && (
+                            <button onClick={() => remove(index)} className="btn btn-sm btn-danger">delete</button>
+                        )}
+                    </div>
+                ))}
             </div>
 
             <button className="btn btn-primary">Submit</button>

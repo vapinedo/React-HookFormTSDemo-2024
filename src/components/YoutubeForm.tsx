@@ -24,7 +24,7 @@ export default function YoutubeForm() {
                 <input type="text" className="form-control" {...register("username", {
                     required: {
                         value: true,
-                        message: "Username is required" 
+                        message: "Username is required"
                     }
                 })} />
                 <small className="text-danger">{errors.username?.message}</small>
@@ -40,9 +40,20 @@ export default function YoutubeForm() {
                     pattern: {
                         value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                         message: "Invalid email format"
+                    },
+                    // validate: (fieldValue) => {
+                    //     return (fieldValue !== "admin@example.com" || "Enter a different email address")
+                    // }
+                    validate: {
+                        notAdmin: (fieldValue) => {
+                            return (fieldValue !== "admin@example.com" || "Enter a different email address")
+                        },
+                        notBlackListed: (fieldValue) => {
+                            return !fieldValue.endsWith("baddomain.com") || "This domain is not supported"
+                        }
                     }
                 })} />
-                <small className="text-danger">{errors.channel?.message}</small>
+                <small className="text-danger">{errors.email?.message}</small>
             </div>
 
             <div className="mb-3">

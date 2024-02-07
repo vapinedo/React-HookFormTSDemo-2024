@@ -12,6 +12,8 @@ type FormValues = {
     phNumbers: {
         number: string;
     }[];
+    age: number;
+    dob: Date; 
 };
 
 export default function YoutubeForm() {
@@ -36,6 +38,8 @@ export default function YoutubeForm() {
             },
             phoneNumbers: ["", ""],
             phNumbers: [{ number: "" }],
+            age: 0,
+            dob: new Date(),
         }
     });
     const { register, handleSubmit, formState, control } = form;
@@ -134,6 +138,30 @@ export default function YoutubeForm() {
                         )}
                     </div>
                 ))}
+            </div>
+
+            <div className="mb-3">
+                <label className="form-label">Age</label>
+                <input type="number" className="form-control" {...register("age", {
+                    valueAsNumber: true,
+                    required: {
+                        value: true,
+                        message: "Age is required"
+                    }
+                })} />
+                <small className="text-danger">{errors.age?.message}</small>
+            </div>
+
+            <div className="mb-3">
+                <label className="form-label">Date of birth</label>
+                <input type="date" className="form-control" {...register("dob", {
+                    valueAsDate: true,
+                    required: {
+                        value: true,
+                        message: "Date or birth is required"
+                    }
+                })} />
+                <small className="text-danger">{errors.dob?.message}</small>
             </div>
 
             <button className="btn btn-primary">Submit</button>

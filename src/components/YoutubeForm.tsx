@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm, useFieldArray, FieldErrors } from "react-hook-form"
 
 type FormValues = {
@@ -45,11 +46,12 @@ export default function YoutubeForm() {
 
     const { 
         watch, 
+        reset,
         control,
         register, 
         setValue,
         getValues, 
-        formState, 
+        formState,
         handleSubmit,
     } = form;
 
@@ -92,6 +94,10 @@ export default function YoutubeForm() {
             shouldValidate: true,
         }));
     }
+
+    useEffect(() => {
+        isSubmitSuccessful && reset();
+    }, [isSubmitSuccessful]);
 
     // const watchForm = watch();
     // const watchUsername = watch("username");
@@ -212,6 +218,7 @@ export default function YoutubeForm() {
             </div>
 
             <button disabled={!isDirty || !isValid || isSubmitting} type="submit" className="btn btn-primary">Submit</button>
+            <button onClick={() => reset()} type="button" className="btn btn-default">Reset</button>
             <button type="button" onClick={handleGetValues} className="btn btn-success">Get values</button>
             <button type="button" onClick={handleSetValue} className="btn btn-warning">Set value</button>
         </form>

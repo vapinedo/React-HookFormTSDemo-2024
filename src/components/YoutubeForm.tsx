@@ -50,10 +50,12 @@ export default function YoutubeForm() {
         setValue,
         getValues, 
         formState, 
-        handleSubmit, 
+        handleSubmit,
     } = form;
 
-    const { errors } = formState;
+    const { errors, touchedFields, dirtyFields } = formState;
+
+    console.log({ touchedFields, dirtyFields });
 
     const { fields, append, remove } = useFieldArray({
         name: "phNumbers",
@@ -88,6 +90,7 @@ export default function YoutubeForm() {
             <div className="mb-3">
                 <label className="form-label">Username</label>
                 <input type="text" className="form-control" {...register("username", {
+                    disabled: true,
                     required: {
                         value: true,
                         message: "Username is required"
@@ -135,7 +138,9 @@ export default function YoutubeForm() {
 
             <div className="mb-3">
                 <label className="form-label">Twitter</label>
-                <input type="text" className="form-control" {...register("social.twitter")} />
+                <input type="text" className="form-control" {...register("social.twitter", {
+                    disabled: watch("channel") === "",
+                })} />
             </div>
 
             <div className="mb-3">

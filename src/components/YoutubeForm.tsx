@@ -140,6 +140,11 @@ export default function YoutubeForm() {
                         },
                         notBlackListed: (fieldValue) => {
                             return !fieldValue.endsWith("baddomain.com") || "This domain is not supported"
+                        },
+                        emailAvailable: async (fieldValue) => {
+                            const response = await fetch(`https://jsonplaceholder.typicode.com/users?email=${fieldValue}`)
+                            const data = await response.json();
+                            return data.length == 0 || "Email already exists";
                         }
                     }
                 })} />
@@ -217,7 +222,7 @@ export default function YoutubeForm() {
                 <small className="text-danger">{errors.dob?.message}</small>
             </div>
 
-            <button disabled={!isDirty || !isValid || isSubmitting} type="submit" className="btn btn-primary">Submit</button>
+            <button disabled={!isDirty || isSubmitting} type="submit" className="btn btn-primary">Submit</button>
             <button onClick={() => reset()} type="button" className="btn btn-default">Reset</button>
             <button type="button" onClick={handleGetValues} className="btn btn-success">Get values</button>
             <button type="button" onClick={handleSetValue} className="btn btn-warning">Set value</button>

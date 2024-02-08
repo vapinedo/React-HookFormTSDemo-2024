@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from "react-hook-form"
+import { useForm, useFieldArray, FieldErrors } from "react-hook-form"
 
 type FormValues = {
     username: string;
@@ -55,7 +55,7 @@ export default function YoutubeForm() {
 
     const { errors, touchedFields, dirtyFields } = formState;
 
-    console.log({ touchedFields, dirtyFields });
+    // console.log({ touchedFields, dirtyFields });
 
     const { fields, append, remove } = useFieldArray({
         name: "phNumbers",
@@ -64,6 +64,10 @@ export default function YoutubeForm() {
 
     function onSubmit(data: FormValues) {
         console.log("Form submitted", data);
+    }
+
+    function onError(errors: FieldErrors<FormValues>) {
+        console.log(errors);
     }
 
     function handleGetValues() {
@@ -83,7 +87,7 @@ export default function YoutubeForm() {
     // const watchUsername = watch(["username", "email"]);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
             <h2 className="mb-4">Youtube Form</h2>
             {/* <article>{JSON.stringify(watchForm)}</article> */}
 

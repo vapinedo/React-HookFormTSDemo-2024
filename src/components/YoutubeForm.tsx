@@ -53,9 +53,20 @@ export default function YoutubeForm() {
         handleSubmit,
     } = form;
 
-    const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
+    const { 
+        errors, 
+        isValid, 
+        isDirty, 
+        dirtyFields, 
+        isSubmitted,
+        submitCount,
+        isSubmitting,
+        touchedFields,
+        isSubmitSuccessful,
+    } = formState;
 
     // console.log({ touchedFields, dirtyFields });
+    console.log({ isSubmitting, isSubmitted, isSubmitSuccessful });
 
     const { fields, append, remove } = useFieldArray({
         name: "phNumbers",
@@ -200,7 +211,7 @@ export default function YoutubeForm() {
                 <small className="text-danger">{errors.dob?.message}</small>
             </div>
 
-            <button disabled={!isDirty || !isValid} type="submit" className="btn btn-primary">Submit</button>
+            <button disabled={!isDirty || !isValid || isSubmitting} type="submit" className="btn btn-primary">Submit</button>
             <button type="button" onClick={handleGetValues} className="btn btn-success">Get values</button>
             <button type="button" onClick={handleSetValue} className="btn btn-warning">Set value</button>
         </form>

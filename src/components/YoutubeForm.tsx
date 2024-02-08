@@ -41,7 +41,8 @@ export default function YoutubeForm() {
             phNumbers: [{ number: "" }],
             age: 0,
             dob: new Date(),
-        }
+        },
+        mode: "onTouched"
     });
 
     const { 
